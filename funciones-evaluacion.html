@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funciones de la Evaluación – Anijovich y Cappelletti, 2017</title>
+  <meta name="description" content="Mapa conceptual interactivo sobre las cinco funciones de la evaluación educativa según Anijovich y Cappelletti (2017): Diagnosticar, Registrar, Ofrecer devoluciones, Seleccionar y Certificar." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== DESIGN TOKENS ===== */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #e8e0f7 0%, #d8d0f0 40%, #e0d8f5 100%);
+      --card-radius: 18px;
+      --card-shadow: 0 4px 24px rgba(80, 60, 140, 0.10);
+      --card-shadow-hover: 0 10px 44px rgba(80, 60, 140, 0.20);
+      --transition-speed: 0.38s;
+
+      --blue:   #3B82F6;
+      --green:  #10B981;
+      --purple: #8B5CF6;
+      --orange: #F59E0B;
+      --pink:   #EC4899;
+
+      --example-bg: #F0FDF4;
+      --example-border: #86EFAC;
+      --example-icon: #22C55E;
+      --desvirt-bg: #FFF7F0;
+      --desvirt-border: #FCA5A5;
+      --desvirt-icon: #EF4444;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: #1e1b4b;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* ===== HERO HEADER ===== */
+    .hero {
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      background: #fff;
+      border-radius: 24px;
+      padding: 2.5rem 2rem 2rem;
+      box-shadow: 0 4px 32px rgba(100, 80, 180, 0.12);
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.9rem, 5vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #8B5CF6, #EC4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-underline {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #8B5CF6, #EC4899);
+      border-radius: 2px;
+      margin: 0 auto 1rem;
+    }
+
+    .hero .author {
+      font-size: 1rem;
+      color: #6b7280;
+      font-weight: 500;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: linear-gradient(135deg, #8B5CF6, #6366F1);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.65rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: default;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.35);
+    }
+
+    .hero-hint svg {
+      width: 16px;
+      height: 16px;
+      stroke: rgba(255,255,255,0.9);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* ===== CARDS GRID ===== */
+    .grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: start;   /* each card takes its own height, not the tallest sibling's */
+      gap: 1.5rem;
+    }
+
+    .grid-row2 {
+      grid-template-columns: repeat(2, 1fr);
+      align-items: start;   /* same fix for the second row */
+      max-width: 740px;
+      margin-top: 1.5rem;
+    }
+
+    /* ===== FUNCTION CARD ===== */
+    .fn-card {
+      background: #fff;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition:
+        box-shadow var(--transition-speed) ease,
+        transform var(--transition-speed) ease,
+        opacity 0.5s ease,
+        translate 0.5s ease;
+    }
+
+    .fn-card:hover {
+      box-shadow: var(--card-shadow-hover);
+      transform: translateY(-3px);
+    }
+
+    /* Entry animation */
+    @starting-style {
+      .fn-card { opacity: 0; translate: 0 22px; }
+    }
+    .fn-card { opacity: 1; translate: 0 0; }
+    .fn-card:nth-child(1) { transition-delay: 0.05s; }
+    .fn-card:nth-child(2) { transition-delay: 0.13s; }
+    .fn-card:nth-child(3) { transition-delay: 0.21s; }
+    .fn-card:nth-child(4) { transition-delay: 0.29s; }
+    .fn-card:nth-child(5) { transition-delay: 0.37s; }
+
+    /* ===== CARD HEADER ===== */
+    .fn-header {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1rem 1rem 1rem 1.1rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .fn-header:focus-visible {
+      outline: 3px solid rgba(255,255,255,0.8);
+      outline-offset: -3px;
+    }
+
+    /* Minimalist SVG icon container */
+    .fn-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 13px;
+      background: rgba(255,255,255,0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .fn-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .fn-title-block {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* ── TITLE: bigger, bolder, tight letter-spacing ── */
+    .fn-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.15);
+    }
+
+    .fn-subtitle {
+      font-size: 0.71rem;
+      color: rgba(255,255,255,0.78);
+      font-weight: 500;
+      margin-top: 0.15rem;
+      letter-spacing: 0.01em;
+    }
+
+    /* Chevron toggle button */
+    .fn-toggle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.2s;
+    }
+
+    .fn-header:hover .fn-toggle { background: rgba(255,255,255,0.35); }
+
+    .fn-toggle svg {
+      width: 16px;
+      height: 16px;
+      stroke: #fff;
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform var(--transition-speed) ease;
+    }
+
+    .fn-card.is-open .fn-toggle svg { transform: rotate(180deg); }
+
+    /* Color themes */
+    .fn-card--blue   .fn-header { background: var(--blue); }
+    .fn-card--green  .fn-header { background: var(--green); }
+    .fn-card--purple .fn-header { background: var(--purple); }
+    .fn-card--orange .fn-header { background: var(--orange); }
+    .fn-card--pink   .fn-header { background: var(--pink); }
+
+    /* ===== ACCORDION BODY — grid-template-rows trick ===== */
+    /*
+     * overflow: hidden on .fn-body clips the child when grid-template-rows: 0fr.
+     * min-height: 0 on .fn-body-inner lets the grid collapse it to 0.
+     */
+    .fn-body {
+      display: grid;
+      grid-template-rows: 0fr;            /* collapsed */
+      overflow: hidden;                   /* CRITICAL: clips content at 0fr */
+      transition: grid-template-rows var(--transition-speed) ease;
+    }
+
+    .fn-card.is-open .fn-body {
+      grid-template-rows: 1fr;            /* expanded */
+    }
+
+    .fn-body-inner {
+      min-height: 0;                      /* required for 0fr to work */
+    }
+
+    .fn-body-content {
+      padding: 1.1rem 1rem 1rem;          /* padding lives here, not on .fn-body-inner */
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    /* Definition paragraph */
+    .fn-def {
+      font-size: 0.875rem;
+      color: #374151;
+      line-height: 1.65;
+      background: #f8f7ff;
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+    }
+
+    /* ===== SUB-CARDS ===== */
+    .sub-card {
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      font-size: 0.825rem;
+      line-height: 1.62;
+      color: #374151;
+    }
+
+    .sub-card--example {
+      background: var(--example-bg);
+      border: 1.5px solid var(--example-border);
+    }
+
+    .sub-card--desvirt {
+      background: var(--desvirt-bg);
+      border: 1.5px solid var(--desvirt-border);
+    }
+
+    .sub-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 0.82rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .sub-card--example .sub-card-header { color: #15803D; }
+    .sub-card--desvirt .sub-card-header { color: #B91C1C; }
+
+    /* Badge circle with SVG icon */
+    .sub-badge {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .sub-badge svg {
+      width: 11px;
+      height: 11px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .sub-card--example .sub-badge { background: var(--example-icon); }
+    .sub-card--desvirt .sub-badge { background: var(--desvirt-icon); }
+
+    /* Sub-card label icon */
+    .sub-label-icon svg {
+      width: 14px;
+      height: 14px;
+      vertical-align: -2px;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      margin-right: 2px;
+    }
+
+    .sub-card--example .sub-label-icon svg { stroke: #15803D; }
+    .sub-card--desvirt .sub-label-icon svg { stroke: #B91C1C; }
+
+    /* ===== ABOUT SECTION ===== */
+    .about-section {
+      max-width: 1100px;
+      margin: 2rem auto 0;
+      background: #fff;
+      border-radius: var(--card-radius);
+      padding: 1.4rem 1.5rem;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .about-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #8B5CF6, #6366F1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .about-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .about-text h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1e1b4b;
+      margin-bottom: 0.4rem;
+    }
+
+    .about-text p {
+      font-size: 0.855rem;
+      color: #6b7280;
+      line-height: 1.65;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-row2 { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
+    }
+
+    @media (max-width: 580px) {
+      .grid, .grid-row2 { grid-template-columns: 1fr; max-width: 100%; }
+      .hero h1 { font-size: 1.75rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fn-body, .fn-toggle svg, .fn-card { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <header>
+    <div class="hero">
+      <h1>Funciones de la Evaluación</h1>
+      <div class="hero-underline" aria-hidden="true"></div>
+      <p class="author">Anijovich y Cappelletti, 2017</p>
+      <div class="hero-hint" aria-label="Haz clic en cada función para explorar detalles">
+        <!-- settings/gear icon -->
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        Haz clic en cada función para explorar detalles
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+
+    <!-- ROW 1: Diagnosticar · Registrar · Ofrecer devoluciones -->
+    <div class="grid" role="list" aria-label="Funciones de la evaluación">
+
+      <!-- 1. DIAGNOSTICAR -->
+      <article class="fn-card fn-card--blue is-open" role="listitem" id="card-diagnosticar">
+        <div
+          class="fn-header"
+          role="button"
+          tabindex="0"
+          aria-expanded="true"
+          aria-controls="body-diagnosticar"
+          id="header-diagnosticar"
+          onclick="toggleCard('diagnosticar')"
+          onkeydown="handleKey(event,'diagnosticar')"
+        >
+          <div class="fn-icon" aria-hidden="true">
+            <!-- Magnifying glass: identify/diagnose -->
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div class="fn-title-block">
+            <div class="fn-title">Diagnosticar</div>
+            <div class="fn-subtitle">Click para contraer</div>
+          </div>
+          <div class="fn-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="fn-body" id="body-diagnosticar" role="region" aria-labelledby="header-diagnosticar">
+          <div class="fn-body-inner">
+            <div class="fn-body-content">
+              <p class="fn-def">
+                Identifica saberes previos y ajusta la propuesta de enseñanza según las producciones, procedimientos y operaciones cognitivas de los estudiantes.
+              </p>
+              <div class="sub-card sub-card--example">
+                <div class="sub-card-header">
+                  <span class="sub-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="sub-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </span>
+                  Ejemplo en informática
+                </div>
+                <p>Al iniciar una unidad de programación orientada a objetos, el docente propone un ejercicio breve para identificar qué conceptos de programación estructural manejan los estudiantes y qué dificultades traen.</p>
+              </div>
+              <div class="sub-card sub-card--desvirt">
+                <div class="sub-card-header">
+                  <span class="sub-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  </span>
+                  <span class="sub-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </span>
+                  Situación de desvirtualización
+                </div>
+                <p>El diagnóstico se realiza pero no se usa para ajustar la enseñanza. Se convierte en un trámite sin incidencia en la planificación.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. REGISTRAR -->
+      <article class="fn-card fn-card--green is-open" role="listitem" id="card-registrar">
+        <div
+          class="fn-header"
+          role="button"
+          tabindex="0"
+          aria-expanded="true"
+          aria-controls="body-registrar"
+          id="header-registrar"
+          onclick="toggleCard('registrar')"
+          onkeydown="handleKey(event,'registrar')"
+        >
+          <div class="fn-icon" aria-hidden="true">
+            <!-- Clipboard with lines: register/record -->
+            <svg viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+          </div>
+          <div class="fn-title-block">
+            <div class="fn-title">Registrar</div>
+            <div class="fn-subtitle">Click para contraer</div>
+          </div>
+          <div class="fn-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="fn-body" id="body-registrar" role="region" aria-labelledby="header-registrar">
+          <div class="fn-body-inner">
+            <div class="fn-body-content">
+              <p class="fn-def">
+                Considera el desempeño de los alumnos en función del nivel de logro de los objetivos, con el fin de avanzar en las secuencias de aprendizaje.
+              </p>
+              <div class="sub-card sub-card--example">
+                <div class="sub-card-header">
+                  <span class="sub-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="sub-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </span>
+                  Ejemplo en informática
+                </div>
+                <p>El docente lleva un registro sistemático de las entregas de código, anotando qué prácticas (comentarios, modularización, manejo de errores) cada estudiante ya domina y cuáles aún no.</p>
+              </div>
+              <div class="sub-card sub-card--desvirt">
+                <div class="sub-card-header">
+                  <span class="sub-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  </span>
+                  <span class="sub-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </span>
+                  Situación de desvirtualización
+                </div>
+                <p>El registro se reduce a una lista de notas numéricas sin descripción cualitativa, perdiendo información valiosa sobre el proceso de aprendizaje.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. OFRECER DEVOLUCIONES -->
+      <article class="fn-card fn-card--purple is-open" role="listitem" id="card-devoluciones">
+        <div
+          class="fn-header"
+          role="button"
+          tabindex="0"
+          aria-expanded="true"
+          aria-controls="body-devoluciones"
+          id="header-devoluciones"
+          onclick="toggleCard('devoluciones')"
+          onkeydown="handleKey(event,'devoluciones')"
+        >
+          <div class="fn-icon" aria-hidden="true">
+            <!-- Speech bubble with reply arrow: feedback -->
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="fn-title-block">
+            <div class="fn-title">Ofrecer devoluciones</div>
+            <div class="fn-subtitle">Click para contraer</div>
+          </div>
+          <div class="fn-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="fn-body" id="body-devoluciones" role="region" aria-labelledby="header-devoluciones">
+          <div class="fn-body-inner">
+            <div class="fn-body-content">
+              <p class="fn-def">
+                Retroalimenta a los alumnos para que tomen conciencia de sus logros, identifiquen errores y cuenten con estrategias para alcanzar los objetivos propuestos.
+              </p>
+              <div class="sub-card sub-card--example">
+                <div class="sub-card-header">
+                  <span class="sub-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="sub-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </span>
+                  Ejemplo en informática
+                </div>
+                <p>Tras revisar un proyecto de base de datos, el docente devuelve comentarios escritos señalando qué decisiones de diseño fueron adecuadas, cuáles generaron redundancia y cómo podrían mejorarse en la siguiente versión.</p>
+              </div>
+              <div class="sub-card sub-card--desvirt">
+                <div class="sub-card-header">
+                  <span class="sub-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  </span>
+                  <span class="sub-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </span>
+                  Situación de desvirtualización
+                </div>
+                <p>La devolución consiste únicamente en una calificación numérica o en frases genéricas ("bien hecho", "hay errores") sin orientación sobre qué mejorar ni cómo hacerlo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ROW 2: Seleccionar · Certificar -->
+    <div class="grid grid-row2" style="margin-left:auto;margin-right:auto;" role="list" aria-label="Funciones de la evaluación – segunda fila">
+
+      <!-- 4. SELECCIONAR -->
+      <article class="fn-card fn-card--orange is-open" role="listitem" id="card-seleccionar">
+        <div
+          class="fn-header"
+          role="button"
+          tabindex="0"
+          aria-expanded="true"
+          aria-controls="body-seleccionar"
+          id="header-seleccionar"
+          onclick="toggleCard('seleccionar')"
+          onkeydown="handleKey(event,'seleccionar')"
+        >
+          <div class="fn-icon" aria-hidden="true">
+            <!-- People/group: select/group students -->
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="fn-title-block">
+            <div class="fn-title">Seleccionar</div>
+            <div class="fn-subtitle">Click para contraer</div>
+          </div>
+          <div class="fn-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="fn-body" id="body-seleccionar" role="region" aria-labelledby="header-seleccionar">
+          <div class="fn-body-inner">
+            <div class="fn-body-content">
+              <p class="fn-def">
+                Sitúa a los estudiantes en relación con otros para definir propuestas acordes a los diferentes niveles de aprendizaje observados en el grupo.
+              </p>
+              <div class="sub-card sub-card--example">
+                <div class="sub-card-header">
+                  <span class="sub-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="sub-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </span>
+                  Ejemplo en informática
+                </div>
+                <p>A partir de los resultados de un trabajo práctico sobre redes, el docente organiza grupos diferenciados: algunos profundizan en seguridad de protocolos mientras otros refuerzan los conceptos de capas del modelo OSI.</p>
+              </div>
+              <div class="sub-card sub-card--desvirt">
+                <div class="sub-card-header">
+                  <span class="sub-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  </span>
+                  <span class="sub-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </span>
+                  Situación de desvirtualización
+                </div>
+                <p>La clasificación se usa para etiquetar estudiantes como "buenos" o "malos" sin generar propuestas pedagógicas diferenciadas, reproduciendo jerarquías sin sentido formativo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. CERTIFICAR -->
+      <article class="fn-card fn-card--pink is-open" role="listitem" id="card-certificar">
+        <div
+          class="fn-header"
+          role="button"
+          tabindex="0"
+          aria-expanded="true"
+          aria-controls="body-certificar"
+          id="header-certificar"
+          onclick="toggleCard('certificar')"
+          onkeydown="handleKey(event,'certificar')"
+        >
+          <div class="fn-icon" aria-hidden="true">
+            <!-- Award/ribbon: certify -->
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          </div>
+          <div class="fn-title-block">
+            <div class="fn-title">Certificar</div>
+            <div class="fn-subtitle">Click para contraer</div>
+          </div>
+          <div class="fn-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+        <div class="fn-body" id="body-certificar" role="region" aria-labelledby="header-certificar">
+          <div class="fn-body-inner">
+            <div class="fn-body-content">
+              <p class="fn-def">
+                Acredita si el alumno alcanza o no las competencias mínimas requeridas, a partir de criterios vinculados con los objetivos finales del curso, asignatura o ciclo.
+              </p>
+              <div class="sub-card sub-card--example">
+                <div class="sub-card-header">
+                  <span class="sub-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                  </span>
+                  <span class="sub-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  </span>
+                  Ejemplo en informática
+                </div>
+                <p>Al finalizar el curso de sistemas operativos, una evaluación integradora verifica que los estudiantes puedan instalar, configurar y resolver problemas básicos en un entorno Linux, cumpliendo los objetivos mínimos establecidos en el programa.</p>
+              </div>
+              <div class="sub-card sub-card--desvirt">
+                <div class="sub-card-header">
+                  <span class="sub-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  </span>
+                  <span class="sub-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </span>
+                  Situación de desvirtualización
+                </div>
+                <p>La certificación se convierte en el único propósito de toda la evaluación, desplazando las funciones formativas y reduciendo el proceso de enseñanza a "entrenar para aprobar".</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="about-section" aria-label="Sobre el mapa conceptual">
+      <div class="about-icon" aria-hidden="true">
+        <!-- Book/map icon -->
+        <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </div>
+      <div class="about-text">
+        <h2>Sobre el mapa conceptual</h2>
+        <p>
+          Este mapa conceptual presenta las cinco funciones principales de la evaluación educativa según Anijovich y Cappelletti (2017).
+          Cada función incluye su definición, un ejemplo aplicado al campo de la informática, y una situación de desvirtualización
+          que ilustra cómo puede perderse el sentido formativo de la evaluación.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    /**
+     * Toggle accordion using class only.
+     * The CSS grid-template-rows trick handles the animation without JS measurement.
+     */
+    function toggleCard(id) {
+      const card     = document.getElementById('card-' + id);
+      const header   = document.getElementById('header-' + id);
+      const subtitle = header.querySelector('.fn-subtitle');
+      const isOpen   = card.classList.contains('is-open');
+
+      card.classList.toggle('is-open', !isOpen);
+      header.setAttribute('aria-expanded', String(!isOpen));
+      subtitle.textContent = isOpen ? 'Click para expandir' : 'Click para contraer';
+    }
+
+    /** Keyboard: activate on Enter or Space */
+    function handleKey(event, id) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        toggleCard(id);
+      }
+    }
+  </script>
+</body>
+</html>
